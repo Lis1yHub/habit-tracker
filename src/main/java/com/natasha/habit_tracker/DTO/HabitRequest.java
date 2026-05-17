@@ -1,9 +1,16 @@
 package com.natasha.habit_tracker.DTO;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+
 public class HabitRequest {
 
+    @NotBlank(message = "Name is required")
     private String name;
+
     private String description;
+
+    @Positive(message = "Target must be a positive number")
     private int target;
 
     public String getName() {
@@ -18,16 +25,16 @@ public class HabitRequest {
         return target;
     }
 
-    public String setName() {
-        return name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String setDescription() {
-        return description;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public int setTarget() {
-        return target;
+    public void setTarget(int target) {
+        this.target = target;
     }
 }
 

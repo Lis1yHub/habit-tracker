@@ -25,7 +25,7 @@ public class HabitService {
     public Habit createHabit(HabitRequest request) {
 
         Habit habit = habitMapper.toEntity(request);
-        habits.put(habit.getId(), habit);
+        habits.put(habit.getHabitId(), habit);
 
         return habit;
     }
@@ -65,3 +65,4 @@ public class HabitService {
         }
         habits.remove(id);
     }
+}

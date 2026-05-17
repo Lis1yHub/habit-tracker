@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import com.natasha.habit_tracker.DTO.HabitRequest;
 import com.natasha.habit_tracker.DTO.HabitResponse;
 import org.springframework.http.ResponseEntity;
+import jakarta.validation.Valid;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +52,8 @@ public class HabitController {
 
     // Обновить привычку
     @PutMapping("/api/habits/{id}")
-    public ResponseEntity<HabitResponse> updateHabit(@PathVariable long id, @RequestBody HabitRequest request) {
+    public ResponseEntity<HabitResponse> updateHabit(@PathVariable long id,
+                                                     @Valid @RequestBody HabitRequest request) {
 
         Habit updatedHabit = habitService.updateHabit(id, request);
         HabitResponse response = habitMapper.toResponse(updatedHabit);
@@ -61,7 +63,7 @@ public class HabitController {
 
     // Создать привычку
     @PostMapping("/api/habits")
-    public ResponseEntity<HabitResponse> createHabit(@RequestBody HabitRequest request) {
+    public ResponseEntity<HabitResponse> createHabit(@Valid @RequestBody HabitRequest request) {
 
         Habit habit = habitService.createHabit(request);
         HabitResponse response = habitMapper.toResponse(habit);

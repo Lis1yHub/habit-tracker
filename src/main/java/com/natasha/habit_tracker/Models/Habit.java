@@ -6,14 +6,14 @@ import java.time.LocalDateTime;
 //@Entity
 public class Habit {
 
-    private long id;
+    private long habitId;
     private String name;
     private String description;
     private int target;
     private LocalDateTime createdAt;
 
-    public long getId() {
-        return id;
+    public long getHabitId() {
+        return habitId;
     }
 
     public String getName() {
@@ -32,8 +32,8 @@ public class Habit {
         return createdAt;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setHabitId(long habitId) {
+        this.habitId = habitId;
     }
 
     public void setName(String name) {
