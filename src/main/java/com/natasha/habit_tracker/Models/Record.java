@@ -1,34 +1,45 @@
 package com.natasha.habit_tracker.Models;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-//@Entity
+import jakarta.persistence.*;
+
+@Entity
 public class Record {
 
-    private long recordId;
-    private long habitId;
-    private LocalDateTime createdAt;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public long getRecordId() {
-        return recordId;
+    private LocalDate date;
+
+    @ManyToOne
+    @JoinColumn(name = "habit_id")
+    private Habit habit;
+
+    @PrePersist
+    public void createdDate() {
+        if (date == null){
+            this.date = LocalDate.now();
+        }
     }
 
-    public long getHabitId() {
-        return habitId;
+    public Long getId() {
+        return id;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setRecordId(long recordId) {
-        this.recordId = recordId;
+    public Habit getHabit() {
+        return habit;
     }
 
-    public void setHabitId(long habitId) {
-        this.habitId = habitId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setHabit(Habit habit) {
+        this.habit = habit;
     }
 }

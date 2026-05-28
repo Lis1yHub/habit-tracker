@@ -4,15 +4,16 @@ import java.time.LocalDateTime;
 
 public class RecordResponse {
 
-    private long recordId;
-    private long habitId;
+    @Id
+    private Long recordId;
+    private Long habitId;
     private LocalDateTime createdAt;
 
-    public long getRecordId() {
+    public Long getRecordId() {
         return recordId;
     }
 
-    public long getHabitId() {
+    public Long getHabitId() {
         return habitId;
     }
 
@@ -20,11 +21,11 @@ public class RecordResponse {
         return createdAt;
     }
 
-    public void setRecordId(long recordId) {
+    public void setRecordId(Long recordId) {
         this.recordId = recordId;
     }
 
-    public void setHabitId(long habitId) {
+    public void setHabitId(Long habitId) {
         this.habitId = habitId;
     }
 

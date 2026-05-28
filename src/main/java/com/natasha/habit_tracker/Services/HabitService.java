@@ -1,13 +1,11 @@
 package com.natasha.habit_tracker.Services;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 import com.natasha.habit_tracker.DTO.HabitRequest;
 import com.natasha.habit_tracker.Mappers.HabitMapper;
 import com.natasha.habit_tracker.Models.Habit;
+import com.natasha.habit_tracker.Repositories.HabitRepository;
 import org.springframework.stereotype.Service;
 import com.natasha.habit_tracker.Exceptions.*;
 
@@ -15,54 +13,49 @@ import com.natasha.habit_tracker.Exceptions.*;
 public class HabitService {
 
     private final HabitMapper habitMapper;
+    private final HabitRepository habitRepository;
 
-    public HabitService(HabitMapper habitMapper) {
+    public HabitService(HabitMapper habitMapper, HabitRepository habitRepository) {
         this.habitMapper = habitMapper;
+        this.habitRepository = habitRepository;
     }
 
-    Map<Long, Habit> habits = new HashMap<>();
-
+    // создание привычки
     public Habit createHabit(HabitRequest request) {
 
         Habit habit = habitMapper.toEntity(request);
-        habits.put(habit.getHabitId(), habit);
-
-        return habit;
+        return habitRepository.save(habit);
     }
 
+    // вернуть привычку по ID
     public Habit getHabitById(long id) {
 
-        Habit habit = habits.get(id);
+        Optional<Habit> optionalHabit = habitRepository.findById(id);
 
-        if (habit == null) {
-            throw new HabitNotFoundException("Habit not found");
-        }
-
-        return habit;
+        return optionalHabit.orElseThrow(() -> new HabitNotFoundException("Habit not found"));
     }
 
+    // вернуть все привычки
     public List<Habit> getAllHabits() {
-        return new ArrayList<>(habits.values());
+
+        return habitRepository.findAll();
     }
 
+    // изменить привычку по ID
     public Habit updateHabit(long id, HabitRequest request) {
 
-        Habit updatedHabit = habits.get(id);
+        Optional<Habit> optionalHabit = habitRepository.findById(id);
+        Habit habit = optionalHabit.orElseThrow(() -> new HabitNotFoundException("Habit not found"));
 
-        if (updatedHabit == null) {
-            throw new HabitNotFoundException("Habit not found");
-        }
+        habitMapper.updateEntity(habit, request);
 
-        habitMapper.updateEntity(updatedHabit, request);
-
-        return updatedHabit;
+        return habitRepository.save(habit);
     }
 
+    // удалить привычку
     public void deleteHabit(long id) {
 
-        if (!habits.containsKey(id)) {
-            throw new HabitNotFoundException("Habit not found");
-        }
-        habits.remove(id);
+        habitRepository.findById(id).orElseThrow(() -> new HabitNotFoundException("Habit not found"));
+        habitRepository.deleteById(id);
     }
 }

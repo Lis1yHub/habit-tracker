@@ -1,19 +1,40 @@
 package com.natasha.habit_tracker.Models;
+import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-//import jakarta.persistence.Entity;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-//@Entity
+@Entity
+@Table(name = "habits")
 public class Habit {
 
-    private long habitId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String name;
     private String description;
     private int target;
-    private LocalDateTime createdAt;
 
-    public long getHabitId() {
-        return habitId;
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false, nullable = false)
+    private LocalDateTime createdAt;
+    @UpdateTimestamp
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "habit",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private List<Record> records = new ArrayList<>();
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -32,8 +53,8 @@ public class Habit {
         return createdAt;
     }
 
-    public void setHabitId(long habitId) {
-        this.habitId = habitId;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
     public void setName(String name) {
@@ -46,5 +67,13 @@ public class Habit {
 
     public void setTarget(int target) {
         this.target = target;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

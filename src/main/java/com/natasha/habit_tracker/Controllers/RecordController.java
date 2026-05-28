@@ -1,6 +1,7 @@
 package com.natasha.habit_tracker.Controllers;
 
 import com.natasha.habit_tracker.DTO.RecordResponse;
+import com.natasha.habit_tracker.Mappers.RecordMapper;
 import com.natasha.habit_tracker.Models.Record;
 import com.natasha.habit_tracker.Services.RecordService;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +13,12 @@ import java.util.*;
 public class RecordController {
 
     private final RecordService recordService;
+    private final RecordMapper recordMapper;
 
-    public RecordController(RecordService recordService) {
+    public RecordController(RecordService recordService, RecordMapper recordMapper) {
+
         this.recordService = recordService;
+        this.recordMapper = recordMapper;
     }
 
     // Получить все записи привычки
@@ -22,16 +26,11 @@ public class RecordController {
     public ResponseEntity<List<RecordResponse>> getRecordsByHabitId(@PathVariable long id) {
 
         List<Record> habitRecords = recordService.getRecordsByHabitId(id);
-
         List<RecordResponse> response = new ArrayList<>();
 
         for (Record record: habitRecords) {
-            RecordResponse r = new RecordResponse();
 
-            r.setRecordId(record.getRecordId());
-            r.setHabitId(record.getHabitId());
-            r.setCreatedAt(record.getCreatedAt());
-
+            RecordResponse r = recordMapper.toResponse(record);
             response.add(r);
         }
 
@@ -43,18 +42,17 @@ public class RecordController {
     public ResponseEntity<RecordResponse> addRecord(@PathVariable long habitId) {
 
         Record record = recordService.createRecord(habitId);
-
-        RecordResponse response = new RecordResponse();
-        response.setHabitId(record.getHabitId());
-        response.setRecordId(record.getRecordId());
-        response.setCreatedAt(record.getCreatedAt());
+        RecordResponse response = recordMapper.toResponse(record);
 
         return ResponseEntity.status(201).body(response);
     }
 
     // удалить запись
-    @DeleteMapping("/records/{id}")
-    public void deleteRecord(@PathVariable long id) {
+    @DeleteMapping("/api/records/{recordId}")
+    public ResponseEntity<RecordResponse> deleteRecord(@PathVariable long recordId) {
 
+        recordService.deleteRecord(recordId);
+
+        return ResponseEntity.noContent().build();
     }
 }

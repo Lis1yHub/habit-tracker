@@ -1,50 +1,65 @@
 package com.natasha.habit_tracker.Services;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
+import java.time.LocalDate;
+
+import com.natasha.habit_tracker.Exceptions.HabitNotFoundException;
+import com.natasha.habit_tracker.Exceptions.RecordNotFoundException;
 import com.natasha.habit_tracker.Models.Record;
+import com.natasha.habit_tracker.Models.Habit;
+import com.natasha.habit_tracker.Repositories.RecordRepository;
+import com.natasha.habit_tracker.Repositories.HabitRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RecordService {
 
-    Map<Long, Record> records = new HashMap<>();
+    private final RecordRepository recordRepository;
+    private final HabitRepository habitRepository;
+
+    public RecordService(RecordRepository recordRepository, HabitRepository habitRepository) {
+        this.recordRepository = recordRepository;
+        this.habitRepository = habitRepository;
+    }
 
     // создание записи
     public Record createRecord(long habitId) {
 
-        Record record = new Record();
-        record.setHabitId(habitId);
-        //record.setRecordId();
-        //record.setCreatedAt();
+        Habit habit = habitRepository.findById(habitId)
+                .orElseThrow(() -> new HabitNotFoundException("Habit not found"));
 
-        records.put(record.getRecordId(), record);
+        LocalDate today = LocalDate.now();
 
-        return record;
+        Optional<Record> existingRecord = recordRepository.findByHabitAndDate(habit, today);
+
+        Record record = existingRecord.orElseGet(() -> {
+            Record newRecord = new Record();
+            newRecord.setHabit(habit);
+            return newRecord;
+        });
+
+        return recordRepository.save(record);
     }
 
     // вернуть запись по ID
     public Record getRecordById(long recordId) {
-        return records.get(recordId);
+
+        return recordRepository.findById(recordId)
+                .orElseThrow(() -> new RecordNotFoundException("Record not found"));
     }
 
     // Получить все записи привычки
     public List<Record> getRecordsByHabitId(long habitId) {
 
-        List<Record> habitRecords = new ArrayList<>();
-
-        for (Record rec: records.values()) {
-            if (rec.getHabitId() == habitId) {
-                habitRecords.add(rec);
-            }
-        }
-
-        return habitRecords;
+        habitRepository.findById(habitId).orElseThrow(() -> new HabitNotFoundException("Habit not found"));
+        return recordRepository.findByHabitId(habitId);
     }
 
     // удалить запись
-    public void deleteRecord(long id) {
-        records.remove(id);
+    public void deleteRecord(long recordId) {
+
+        recordRepository.findById(recordId).orElseThrow(() -> new RecordNotFoundException("Record not found"));
+
+        recordRepository.deleteById(recordId);
     }
 }

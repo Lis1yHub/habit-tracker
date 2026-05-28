@@ -12,7 +12,7 @@ public class HabitMapper {
         HabitResponse response = new HabitResponse();
 
         response.setName(habit.getName());
-        response.setId(habit.getHabitId());
+        response.setId(habit.getId());
         response.setDescription(habit.getDescription());
         response.setTarget(habit.getTarget());
         response.setCreatedAt(habit.getCreatedAt());
