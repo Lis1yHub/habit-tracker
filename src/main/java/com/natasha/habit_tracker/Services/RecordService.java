@@ -38,7 +38,12 @@ public class RecordService {
             return newRecord;
         });
 
-        return recordRepository.save(record);
+        System.out.println("📌 Перед сохранением date = " + record.getDate());
+        Record saved = recordRepository.save(record);
+        System.out.println("📌 После сохранения date = " + saved.getDate());
+        return saved;
+
+        //return recordRepository.save(record);
     }
 
     // вернуть запись по ID

@@ -2,8 +2,18 @@ package com.natasha.habit_tracker.Models;
 import java.time.LocalDate;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import jakarta.persistence.EntityListeners;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@Table(name = "records")
+@EntityListeners(AuditingEntityListener.class)
 public class Record {
 
     @Id
@@ -22,24 +32,5 @@ public class Record {
             this.date = LocalDate.now();
         }
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public Habit getHabit() {
-        return habit;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setHabit(Habit habit) {
-        this.habit = habit;
-    }
 }
+

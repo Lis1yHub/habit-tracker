@@ -3,11 +3,11 @@ package com.natasha.habit_tracker.Services;
 import java.util.*;
 
 import com.natasha.habit_tracker.DTO.HabitRequest;
+import com.natasha.habit_tracker.Exceptions.HabitNotFoundException;
 import com.natasha.habit_tracker.Mappers.HabitMapper;
 import com.natasha.habit_tracker.Models.Habit;
 import com.natasha.habit_tracker.Repositories.HabitRepository;
 import org.springframework.stereotype.Service;
-import com.natasha.habit_tracker.Exceptions.*;
 
 @Service
 public class HabitService {

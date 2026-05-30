@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-updated-at-column
+      author: natasha
+      changes:
+        - addColumn:
+            tableName: habits
+            columns:
+              - column:
+                  name: updated_at
+                  type: timestamp

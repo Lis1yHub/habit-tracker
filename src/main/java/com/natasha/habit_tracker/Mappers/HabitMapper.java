@@ -1,5 +1,7 @@
 package com.natasha.habit_tracker.Mappers;
 
+import com.natasha.habit_tracker.DTO.HabitRequest;
+import com.natasha.habit_tracker.DTO.HabitResponse;
 import com.natasha.habit_tracker.DTO.*;
 import com.natasha.habit_tracker.Models.Habit;
 import org.springframework.stereotype.Component;

@@ -12,11 +12,9 @@ public class RecordMapper {
         RecordResponse response = new RecordResponse();
 
         response.setHabitId(record.getId());
-        response.setRecordId(record.getRecordId());
+        response.setRecordId(record.getId());
+        response.setDate(record.getDate());
 
         return response;
     }
-
-    //public Record toEntity() {
-    //}
 }
