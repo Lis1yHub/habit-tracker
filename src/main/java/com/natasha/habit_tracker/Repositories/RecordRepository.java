@@ -14,4 +14,8 @@ public interface RecordRepository extends JpaRepository<Record, Long> {
     boolean existsByHabitIdAndDate(Long habitId, LocalDate date);
 
     Optional<Record> findByHabitAndDate(Habit habit, LocalDate date);
+
+    List<Record> findByHabitIdOrderByDateDesc(Long habitId);
+
+    List<Record> findByHabitIdOrderByDateAsc(Long habitId);
 }
