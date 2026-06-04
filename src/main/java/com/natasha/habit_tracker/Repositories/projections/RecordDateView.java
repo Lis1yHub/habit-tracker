@@ -1,4 +1,7 @@
 package com.natasha.habit_tracker.Repositories.projections;
 
-public class RecordDateView {
+import java.time.LocalDate;
+
+public interface RecordDateView {
+    LocalDate getDate();
 }

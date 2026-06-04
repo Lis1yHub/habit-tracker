@@ -17,7 +17,4 @@ public class HabitStatsResponse {
 
     private int totalCompletions;
 
-    public int getTotalComplections() {
-        return totalCompletions;
-    }
 }

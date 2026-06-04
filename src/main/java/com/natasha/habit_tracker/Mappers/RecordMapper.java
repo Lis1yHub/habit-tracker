@@ -11,7 +11,7 @@ public class RecordMapper {
 
         RecordResponse response = new RecordResponse();
 
-        response.setHabitId(record.getId());
+        response.setHabitId(record.getHabit().getId());
         response.setRecordId(record.getId());
         response.setDate(record.getDate());
 

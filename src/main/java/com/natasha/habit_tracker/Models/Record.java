@@ -1,4 +1,5 @@
 package com.natasha.habit_tracker.Models;
+
 import java.time.LocalDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.*;
@@ -10,7 +11,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "records")
+@Table(
+        name = "records",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"habit_id", "date"})
+        }
+)
 @EntityListeners(AuditingEntityListener.class)
 public class Record {
 
@@ -26,9 +32,8 @@ public class Record {
 
     @PrePersist
     public void createdDate() {
-        if (date == null){
+        if (date == null) {
             this.date = LocalDate.now();
         }
     }
 }
-

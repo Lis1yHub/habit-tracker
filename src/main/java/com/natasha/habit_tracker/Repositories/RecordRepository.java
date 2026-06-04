@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import com.natasha.habit_tracker.Models.Record;
 import java.util.Optional;
 import com.natasha.habit_tracker.Models.Habit;
+import com.natasha.habit_tracker.Repositories.projections.RecordDateView;
 
 public interface RecordRepository extends JpaRepository<Record, Long> {
 
@@ -15,7 +16,6 @@ public interface RecordRepository extends JpaRepository<Record, Long> {
 
     Optional<Record> findByHabitAndDate(Habit habit, LocalDate date);
 
-    List<Record> findByHabitIdOrderByDateDesc(Long habitId);
+    List<RecordDateView> findByHabitIdOrderByDateAsc(Long habitId);
 
-    List<Record> findByHabitIdOrderByDateAsc(Long habitId);
 }

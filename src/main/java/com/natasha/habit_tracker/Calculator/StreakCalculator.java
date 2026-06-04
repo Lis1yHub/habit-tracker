@@ -1,31 +1,31 @@
 package com.natasha.habit_tracker.Calculator;
 
-import com.natasha.habit_tracker.Models.Record;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.time.temporal.ChronoUnit;
 
 @Service
 public class StreakCalculator {
 
     // общее количество выполнений
-    public int calculateTotalCompletions(List<Record> records) {
+    public int calculateTotalCompletions(List<LocalDate> dates) {
 
-        return records.size();
+        return dates.size();
     }
 
-    // текущая серия побед
-    public int calculateCurrentStreak(List<Record> records) {
+    // текущая серия выполнений
+    public int calculateCurrentStreak(List<LocalDate> dates) {
+
+        if (dates.isEmpty()) return 0;
+
         int currentStreak = 0;
         LocalDate expectedDate = LocalDate.now();
 
-        for (Record record: records) {
-            if (record.getDate().equals(expectedDate)) {
+        for (int i = dates.size() - 1; i >= 0; i--) {
+
+            if (dates.get(i).equals(expectedDate)) {
                 currentStreak++;
                 expectedDate = expectedDate.minusDays(1);
             } else {
@@ -36,34 +36,30 @@ public class StreakCalculator {
         return currentStreak;
     }
 
-    public double calculateCompletionRate(List<Record> records, LocalDateTime habitCreatedAt) {
+    // процент выполнения
+    public double calculateCompletionRate(List<LocalDate> dates, LocalDateTime habitCreatedAt) {
+
         LocalDate today = LocalDate.now();
         LocalDate createdDate = habitCreatedAt.toLocalDate();
 
-        Set<LocalDate> set = new HashSet<>();
-        for (Record record: records) {
-            set.add(record.getDate());
-        }
-
-        int completedDays = set.size();
+        int completedDays = dates.size();
         long N = ChronoUnit.DAYS.between(createdDate, today) + 1;
 
         return (completedDays * 100.0) / N;
     }
 
-    public int calculateBestStreak(List<Record> records) {
+    // лучшая серия выполнений
+    public int calculateBestStreak(List<LocalDate> dates) {
 
-        if (records == null || records.isEmpty()) {
-            return 0;
-        }
+        if (dates.isEmpty()) return 0;
 
         int currentStreak = 1;
         int bestStreak = 1;
-        LocalDate prevDate = records.get(0).getDate();
+        LocalDate prevDate = dates.get(0);
 
-        for (int i = 1; i < records.size(); i++) {
+        for (int i = 1; i < dates.size(); i++) {
 
-            LocalDate currentDate = records.get(i).getDate();
+            LocalDate currentDate = dates.get(i);
 
             if (currentDate.equals(prevDate.plusDays(1))) {
                 currentStreak++;
@@ -75,8 +71,6 @@ public class StreakCalculator {
             prevDate = currentDate;
         }
 
-        bestStreak = Math.max(bestStreak, currentStreak);
-
-        return bestStreak;
+        return Math.max(bestStreak, currentStreak);
     }
 }
