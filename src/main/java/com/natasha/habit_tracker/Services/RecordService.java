@@ -1,6 +1,6 @@
 package com.natasha.habit_tracker.Services;
-import java.time.LocalDate;
 
+import java.time.LocalDate;
 import com.natasha.habit_tracker.Exceptions.HabitNotFoundException;
 import com.natasha.habit_tracker.Exceptions.RecordNotFoundException;
 import com.natasha.habit_tracker.Models.Record;
@@ -59,7 +59,6 @@ public class RecordService {
     public void deleteRecord(long recordId) {
 
         recordRepository.findById(recordId).orElseThrow(() -> new RecordNotFoundException("Record not found"));
-
         recordRepository.deleteById(recordId);
     }
 }
