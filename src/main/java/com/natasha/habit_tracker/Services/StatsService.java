@@ -59,6 +59,7 @@ public class StatsService {
     }
 
     // вернуть дневную статистику привычки
+    @Transactional(readOnly = true)
     public DailyStatsResponse getDailyHabitStats() {
 
         List<Habit> habits = habitRepository.findAll();
@@ -77,6 +78,8 @@ public class StatsService {
         return statsMapper.toDaily(date, habitsList);
     }
 
+    // вернуть недельную статистику привычки
+    @Transactional(readOnly = true)
     public WeekStatsResponse getWeekStats() {
 
         long totalCount = habitRepository.count();
