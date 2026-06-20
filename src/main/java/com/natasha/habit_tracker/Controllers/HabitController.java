@@ -3,6 +3,7 @@ package com.natasha.habit_tracker.Controllers;
 import com.natasha.habit_tracker.Mappers.HabitMapper;
 import com.natasha.habit_tracker.Models.Habit;
 import com.natasha.habit_tracker.Services.HabitService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import com.natasha.habit_tracker.DTO.HabitRequest;
 import com.natasha.habit_tracker.DTO.HabitResponse;
@@ -13,16 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class HabitController {
 
     private final HabitService habitService;
     private final HabitMapper habitMapper;
 
-    public HabitController(HabitService habitService, HabitMapper habitMapper) {
-
-        this.habitService = habitService;
-        this.habitMapper = habitMapper;
-    }
 
     // Получить привычку по ID
     @GetMapping("/api/habits/{id}")

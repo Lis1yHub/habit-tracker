@@ -10,6 +10,8 @@ import com.natasha.habit_tracker.Repositories.projections.RecordCountByDateView;
 import com.natasha.habit_tracker.Repositories.projections.RecordDateView;
 import com.natasha.habit_tracker.Mappers.StatsMapper;
 import java.util.stream.IntStream;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class StatsService {
 
     private final HabitRepository habitRepository;
@@ -25,12 +28,6 @@ public class StatsService {
     private final StreakCalculator streakCalculator;
     private final StatsMapper statsMapper;
 
-    public StatsService(HabitRepository habitRepository, RecordRepository recordRepository, StreakCalculator streakCalculator, StatsMapper statsMapper) {
-        this.habitRepository = habitRepository;
-        this.recordRepository = recordRepository;
-        this.streakCalculator = streakCalculator;
-        this.statsMapper = statsMapper;
-    }
 
     // вернуть статистику привычки
     @Transactional(readOnly = true)

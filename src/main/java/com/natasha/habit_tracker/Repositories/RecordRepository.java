@@ -9,7 +9,9 @@ import java.util.Optional;
 import com.natasha.habit_tracker.Models.Habit;
 import com.natasha.habit_tracker.Repositories.projections.RecordDateView;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface RecordRepository extends JpaRepository<Record, Long> {
 
     List<Record> findByHabitId(Long habitId);

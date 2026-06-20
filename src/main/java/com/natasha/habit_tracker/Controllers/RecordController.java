@@ -4,22 +4,19 @@ import com.natasha.habit_tracker.DTO.RecordResponse;
 import com.natasha.habit_tracker.Mappers.RecordMapper;
 import com.natasha.habit_tracker.Models.Record;
 import com.natasha.habit_tracker.Services.RecordService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
 @RestController
+@RequiredArgsConstructor
 public class RecordController {
 
     private final RecordService recordService;
     private final RecordMapper recordMapper;
 
-    public RecordController(RecordService recordService, RecordMapper recordMapper) {
-
-        this.recordService = recordService;
-        this.recordMapper = recordMapper;
-    }
 
     // Получить все записи привычки
     @GetMapping("/api/habits/{id}/records")

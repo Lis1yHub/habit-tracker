@@ -7,20 +7,18 @@ import com.natasha.habit_tracker.Models.Record;
 import com.natasha.habit_tracker.Models.Habit;
 import com.natasha.habit_tracker.Repositories.RecordRepository;
 import com.natasha.habit_tracker.Repositories.HabitRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class RecordService {
 
     private final RecordRepository recordRepository;
     private final HabitRepository habitRepository;
 
-    public RecordService(RecordRepository recordRepository, HabitRepository habitRepository) {
-        this.recordRepository = recordRepository;
-        this.habitRepository = habitRepository;
-    }
 
     // создание записи
     public Record createRecord(long habitId) {

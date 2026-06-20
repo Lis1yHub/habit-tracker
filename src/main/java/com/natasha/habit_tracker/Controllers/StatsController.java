@@ -4,18 +4,17 @@ import com.natasha.habit_tracker.DTO.DailyStatsResponse;
 import com.natasha.habit_tracker.DTO.HabitStatsResponse;
 import com.natasha.habit_tracker.DTO.WeekStatsResponse;
 import com.natasha.habit_tracker.Services.StatsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
+@RequiredArgsConstructor
 public class StatsController {
 
     private final StatsService statsService;
 
-    public StatsController(StatsService statsService) {
-        this.statsService = statsService;
-    }
 
     @GetMapping("/api/habits/{id}/stats")
     public HabitStatsResponse getStats(@PathVariable long id) {

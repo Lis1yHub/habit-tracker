@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: 001-create-habits-table
-      author: yourname
+      author: natasha
       changes:
         - createTable:
             tableName: habits

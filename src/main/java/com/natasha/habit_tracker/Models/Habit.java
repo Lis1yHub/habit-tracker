@@ -40,4 +40,8 @@ public class Habit {
             fetch = FetchType.LAZY
     )
     private List<Record> records = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }
